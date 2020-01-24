@@ -7,30 +7,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Threading;
 
 namespace Jarvis.TestCase
 {
     [TestFixture]
     public class LoginPageTest:TestBase
     {
-        private LoginPage login;
 
         [Test,Order(1)]
         public void VerifyLogoOfJarvisOnLoginPage()
         {
-            login = new LoginPage();
-            login.VerifyLogoOfJarvisOnLoginPage();
+            var loginpage=new LoginPage(driver);
+            loginpage.VerifyLogoOfJarvisOnLoginPage();
+        }
+        [Test, Order(2)]
+        public void CheckRememberIsDisplayed()
+        {
+            var loginpage = new LoginPage(driver);
+            loginpage.CheckRememberIsDisplayed();
         }
 
-        [Test,Order(2)]
+        [Test, Order(3)]
+        public void ForgotPassWordIsVisible()
+        {
+            var loginpage = new LoginPage(driver);
+            loginpage.ForgotPassWordIsVisible();
+        }
+
+        [Test,Order(4)]
         public void ToCheckInvalidLogin()
         {
-            login = new LoginPage();
-            var UserName = ConfigurationManager.AppSettings["userName"];
-            Console.WriteLine(UserName);
-            var PassWord = ConfigurationManager.AppSettings["passWord"];
-            Console.WriteLine(PassWord);
-            login.ToCheckInvalidLogin(UserName, PassWord);
+            var loginpage = new LoginPage(driver);
+            var Username = ConfigurationManager.AppSettings["userName"];
+            var Password = ConfigurationManager.AppSettings["passWord"];
+            loginpage.ToCheckInvalidLogin(Username, Password);
+            Thread.Sleep(5000);  
         }
+
+        [Test,Order(5)]
+        public void GetLogin()
+        {
+            var loginpage = new LoginPage(driver);
+            var Username = ConfigurationManager.AppSettings["userName"];
+            var Password = ConfigurationManager.AppSettings["ValidPassWord"];
+            loginpage.GetLogin(Username, Password);
+        }
+
     }
 }

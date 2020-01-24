@@ -10,23 +10,35 @@ namespace Jarvis.HelperClass
 {
     public class GenericHelper
     {
-        IWebDriver driver;   
-        public bool IsElementVisible(string element)
+        public bool IsElementVisible(IWebElement element)
         {
             try
             {
-                bool isElementDisplayed = driver.FindElement(By.XPath(element)).Displayed;
-                Console.WriteLine(element, "has been Displayed");
+                Console.WriteLine(element.Displayed);
                 return true;
             }
-
             catch
             {
-                Console.WriteLine(element, "has not been Displayed");
+                Console.WriteLine("Element is not been Displayed");
+                return false;
+            }    
+        }
+        public bool GetTextofElement(IWebElement element)
+        {
+            try
+            {
+                Console.WriteLine(element.Text, "has been Displayed");
+                return true;
+
+            }
+            catch
+            {
+                Console.WriteLine("Text is not displaying");
                 return false;
             }
-            
+
         }
 
+        
     }
 }

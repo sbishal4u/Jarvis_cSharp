@@ -54,8 +54,13 @@
   <ItemGroup>
     <Compile Include="HelperClass\GenericHelper.cs" />
     <Compile Include="BaseClass\TestBase.cs" />
+    <Compile Include="HelperClass\JavaScriptHelper.cs" />
+    <Compile Include="JarvisPages\DashboardPage.cs" />
     <Compile Include="JarvisPages\LoginPage.cs" />
+    <Compile Include="JarvisPages\ManageOrganisationPage.cs" />
+    <Compile Include="TestCase\DashboardPageTest.cs" />
     <Compile Include="TestCase\LoginPageTest.cs" />
+    <Compile Include="TestCase\ManageOrganisationTest.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

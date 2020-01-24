@@ -10,8 +10,14 @@ using Jarvis.HelperClass;
 
 namespace Jarvis.JarvisPages
 {
-    public class LoginPage:TestBase
+    public class LoginPage
     {
+        IWebDriver driver;
+        public LoginPage(IWebDriver driver)
+        {
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
+        }
 
         [FindsBy(How = How.XPath, Using = "//div[@class='login-logo']")]
         public IWebElement JarvisLogo { get; set; }
@@ -20,33 +26,58 @@ namespace Jarvis.JarvisPages
         public IWebElement emailAddress { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//input[@id='Password']")]
-        public IWebElement password { get; set; }
+        public IWebElement pwd { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//*[contains(text(),'Sign In')]")]
         public IWebElement signIn { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//div[@class='text-danger validation-summary-errors']/ul")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='text-danger validation-summary-errors']/ul/li")]
         public IWebElement invalidLoginMessage { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='col-xs-6']/label")]
+        public IWebElement rememberMe { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='col-xs-6 text-right']")]
+        public IWebElement forgotPassword { get; set; }
 
         public void VerifyLogoOfJarvisOnLoginPage()
         {
-            new GenericHelper().IsElementVisible("JarvisLogo");
+            new GenericHelper().IsElementVisible(JarvisLogo);
         }
 
-        public void ToCheckInvalidLogin(string un,string pwd)
+        public void CheckRememberIsDisplayed()
         {
-            emailAddress.SendKeys(un);
-            emailAddress.SendKeys(pwd);
-            signIn.Click();
-            new GenericHelper().IsElementVisible("invalidLoginMessage");
+            new GenericHelper().IsElementVisible(rememberMe);
+            new GenericHelper().GetTextofElement(rememberMe);
         }
 
-        public void GetLogin(string userName, string passWord)
+        public void ForgotPassWordIsVisible()
         {
-            emailAddress.SendKeys(userName);
-            emailAddress.SendKeys(passWord);
+            new GenericHelper().IsElementVisible(forgotPassword);
+            new GenericHelper().GetTextofElement(forgotPassword);
+        }
+
+        public void ToCheckInvalidLogin(string username, string password)
+        {
+            emailAddress.SendKeys(username);
+            pwd.SendKeys(password);
+            signIn.Click();
+            var generichelper=new GenericHelper();
+            generichelper.GetTextofElement(invalidLoginMessage);
+        }
+
+        public void GetLogin(string username, string password)
+        {
+            emailAddress.SendKeys(username);
+            pwd.SendKeys(password);
             signIn.Click();
         }
+
+        public DashboardPage NavigateToDashboardPage()
+        {
+            return new DashboardPage(driver);
+        }
+
        
     }
 }
